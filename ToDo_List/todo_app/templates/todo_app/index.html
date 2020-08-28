@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load crispy_forms_tags %}
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static "css/master.css"%}">
+
+    <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <hr>
+    <h1>{{title}}</h1>
+    <hr>
+    {% if list%}
+    {% for l in list%}
+    <div class="jumbotron">
+      <em id="one">{{l.title}}</em>
+      <hr>
+      {{l.date}}
+      <hr>
+      <div class="style">
+        {{l.task}}
+      </div>
+
+      <form action="/del/{{l.id}}" method="POST" style=" padding-right: 4%; padding-bottom: 3%;">
+          {% csrf_token %}
+          <button value="remove" type="submit"  class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-remove"></span> &nbsp; remove</button>
+        </form>
+
+    </div>
+
+    {% endfor %}
+    {% endif %}
+
+<div class="formP jumbotron" >
+  <h1>Add new Task</h1>
+  <hr>
+  <form  method="post">
+    {{forms|crispy}}
+    {% csrf_token %}
+    <input type="submit" name="submit" value="submit">
+  </form>
+</div>
+
+
+
+  </body>
+</html>
